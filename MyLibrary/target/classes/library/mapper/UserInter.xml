@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="library.mapper.UserInter">
+<!-- 查询一个用户 -->
+  <select id="SelectOne" parameterType="int" resultType="library.pojo.User">
+    select * from reader where uid = #{uid}
+  </select>
+<!-- 修改用户密码 --> 
+  <update id="revise">
+	  update reader set upw = #{newpw} where uid = #{uid}
+	</update>
+<!-- 用户还书 -->	
+	<update id="give">
+	  update reader set bname=null where uid = #{uid}
+	</update>	
+<!-- 用户借书 -->	
+	<update id="borrow">
+	  update reader set bname=#{bname} where uid = #{uid}
+	</update>
+<!-- 查询所有用户 -->
+	<resultMap type="library.pojo.User" id="SelectAll">
+		<result property="uid" column="uid"/>
+		<result property="upw" column="upw"/>
+		<result property="uname" column="uname"/>
+		<result property="bname" column="bname"/>
+	</resultMap>
+	<select id="FindAll" resultMap="SelectAll">
+    	select * from reader where uid !=666666
+  	</select>
+<!-- 插入用户 -->
+	<insert id="InsertOne">
+		insert into reader(uid,upw,uname) values(#{uid},#{upw},#{uname})
+	</insert>
+<!-- 删除用户 -->
+	<delete id="deleteOne">
+		delete from reader where uid=#{uid}
+	</delete>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="library.mapper.BookInter">
+<!-- 图书减一 -->
+	<update id="ReduceQuantity">
+	  update book set quantity=quantity-1 where bname = #{bname}
+	</update>
+<!-- 图书加一-->
+	<update id="AddQuantity">
+	  update book set quantity=quantity+1 where bname = #{bname}
+	</update>
+<!-- 查询所有图书 -->
+	<resultMap type="library.pojo.Book" id="SelectAll">
+		<result property="bid" column="bid"/>
+		<result property="bname" column="bname"/>
+		<result property="quantity" column="quantity"/>
+	</resultMap>
+	<select id="FindAll" resultMap="SelectAll">
+    	select * from Book
+  	</select>
+ <!-- 查询一本图书 --> 	
+  	<select id="FindOne" parameterType="int" resultType="library.pojo.Book">
+    select * from book where bid = #{bid}
+  </select>
+<!-- 插入图书 -->
+	<insert id="InsertOne">
+		insert into book(bid,bname,quantity) values(#{bid},#{bname},#{quantity})
+	</insert>
+<!-- 删除图书 -->
+	<delete id="deleteOne">
+		delete from book where bid=#{bid}
+	</delete>
+<!-- 修改图书数量 -->
+	<update id="chanceBook">
+		 update book set quantity=#{quantity} where bid = #{bid}
+	</update>
+</mapper>

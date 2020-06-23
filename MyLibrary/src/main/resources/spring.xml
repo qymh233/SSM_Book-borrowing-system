@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 注解开发，组件扫描 -->
+    <context:component-scan base-package="library">
+    	<!-- 扫描非控制层注解 -->
+    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+    <!-- 加载配置文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    
+    <!-- 使用默认数据库连接池 -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.userName}"/>
+		<property name="password" value="${jdbc.passWord}"/>
+	</bean>
+    
+    <!-- 配置SqlSessionFactory -->   
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<!-- 配置mybatis核心配置文件 -->
+    	<property name="configLocation" value="classpath:spring_mybatis.xml"/>
+    	<!-- 配置数据源 -->
+    	<property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- Mapper包扫描配置代理 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 配置mapperr接口 -->
+		<property name="basePackage" value="library.mapper"/>    
+    </bean>
+    
+    <!-- 配置平台事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>    	
+    </bean>
+    
+    <!-- 开启注解事务 -->
+ 	<tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    
+      <bean id="People" class="library.bean.People">  
+        <!-- collaborators and configuration for this bean go here -->
+        <constructor-arg name="name" value="lisi"/>
+        <constructor-arg name="car" ref="Car"/>
+    </bean>
+
+    <bean id="Car" class="library.bean.Car">
+        <!-- collaborators and configuration for this bean go here -->
+        <property name="brand" value="HHH"/>
+        <property name="color" value="pink"/>
+    </bean>
+    
+</beans>
