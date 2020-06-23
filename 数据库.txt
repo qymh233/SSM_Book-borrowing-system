@@ -1,0 +1,25 @@
+insert into book values(2020001,'《生命从明天开始》',50);
+insert into book values(2020002,'《平凡的世界》',50);
+insert into book values(2020003,'《红岩》',50);
+insert into book values(2020004,'《十万个斗智故事》',50);
+insert into book values(2020005,'《神秘岛》',70);
+insert into book values(2020006,'《昆虫记》',80);
+insert into book values(2020007,'《格列佛游记》',11);
+insert into book values(2020008,'《世界著名发明家的故事》',44);
+insert into book values(2020009,'《荷马史诗故事》',45);
+insert into book values(2020010,'《百家姓》',60);
+insert into book values(2020011,'《哈克贝星·费思历险记》',89);
+insert into book values(2020012,'《冰心作品选》',46);
+insert into book values(2020013,'《叶圣陶作品选》',78);
+insert into book values(2020014,'《西游记》',79);
+insert into book values(2020015,'《红楼梦》',80);
+
+
+
+insert into reader values(123001,'123456zs','张三','《三国演义》');
+insert into reader values(123002,'123456ls','李四','《红楼梦》');
+insert into reader values(123003,'123456ww','王五','《西游记》');
+insert into reader values(123004,'123456zl','赵六',null);
+
+
+insert into reader values(666666,'admin','admin',null);
